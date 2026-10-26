@@ -45,7 +45,8 @@
     "n_conflicts": 3,
     "n_add": 1,
     "change_groups": null,
-    "preset": "tiny"
+    "preset": "tiny",
+    "expected_verdict": null
   },
   "n_records": {
     "v1": 33,

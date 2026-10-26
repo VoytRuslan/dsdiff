@@ -7,7 +7,7 @@ python bench/plots.py [--csv bench/results.csv] [--out bench]
     collisions.png      false renames against hash length
     breaks.png          what breaks in v0 (id-first baseline) on each phenomenon, against our diff
     summary.md          4096 buckets against about n / 16: diff time, buckets read, storage;
-                        v0 / flat / tree on the presets (from bench/baseline.csv, if present)
+                        v0 / flat / tree on the presets (baseline rows; bench/baseline.csv overrides)
 """
 import argparse
 import csv
@@ -297,11 +297,11 @@ def plot_breaks(rows, out):
     wrong_v0 = wrong_ours = 0
     for i, sc in enumerate(scenarios):
         y = top - step * (i + 0.5)
-        want = cell(rows, "verdict", sc, "truth")
+        want = cell(rows, "verdict", sc, "expected")
         truth_leaks = int(float(cell(rows, "leaks", sc, "truth")))
-        fig.text(cols[0], y + 0.018, cell(rows, "verdict", sc, "v0") and
-                 next(r["label"] for r in rows if r["scenario"] == sc), fontsize=13, color=INK, va="center")
-        fig.text(cols[0], y - 0.03, f"нужно: {VERDICTS[want]}", fontsize=10.5, color=INK2, va="center")
+        fig.text(cols[0], y + 0.018, next(r["label"] for r in rows if r["scenario"] == sc), fontsize=13,
+                 color=INK, va="center")
+        fig.text(cols[0], y - 0.03, f"ожидается: {VERDICTS[want]}", fontsize=10.5, color=INK2, va="center")
         for k, m in enumerate(("v0", "flat")):
             errors = int(float(cell(rows, "errors", sc, m)))
             changes = int(float(cell(rows, "changes", sc, "truth")))
@@ -328,7 +328,7 @@ def plot_breaks(rows, out):
     title = (f"v0 ошибается в {wrong_v0} сценариях из {len(scenarios)}, наш diff — "
              + ("ни в одном" if not wrong_ours else f"в {wrong_ours}"))
     fig.text(0.04, 0.95, title, fontsize=17, fontweight="bold", color=INK, va="top")
-    n = cell(rows, "verdict", scenarios[0], "truth") and next(r["n"] for r in rows if r["scenario"] == scenarios[0])
+    n = next(r["n"] for r in rows if r["scenario"] == scenarios[0])
     fig.text(0.04, 0.885, textwrap.fill(f"Каждый сценарий — одно явление на спокойной базе из {num(n)} "
                                         f"записей. Верно — изменение найдено с тем же классом, что в truth; "
                                         f"лишние — строки, которых в truth нет", 125),
@@ -342,11 +342,12 @@ def baseline_table(rows):
     lines = ["# v0 (сопоставление по id) / наш плоский / дерево", "",
              "Ошибок — строк изменений, не совпавших с truth (пропущено + лишних; группы неоднозначных "
              "переименований не считаются). Время — сам diff, без чтения файлов; для дерева без commit.", "",
-             "| набор | записей | изменений | нужный вердикт | v0: ошибок / вердикт / время "
+             "| набор | записей | изменений | ожидаемый вердикт | v0: ошибок / вердикт / время "
              "| плоский | дерево |", "|---|---|---|---|---|---|---|"]
     for sc in scenarios:
         label = next(r["label"] for r in rows if r["scenario"] == sc) or sc
-        want = cell(rows, "verdict", sc, "truth")
+        want = cell(rows, "verdict", sc, "expected")
+        computed = cell(rows, "verdict_source", sc, "expected") != "preset"
 
         def method(m):
             got = cell(rows, "verdict", sc, m)
@@ -355,8 +356,10 @@ def baseline_table(rows):
                     f"{human_seconds(float(cell(rows, 'seconds', sc, m)))}")
         n = next(r["n"] for r in rows if r["scenario"] == sc)
         lines.append(f"| {label} | {num(n)} | {num(float(cell(rows, 'changes', sc, 'truth')))} "
-                     f"| {VERDICTS[want]} | {method('v0')} | {method('flat')} | {method('tree')} |")
-    return lines + [""]
+                     f"| {VERDICTS[want]}{' ¹' if computed else ''} | {method('v0')} | {method('flat')} "
+                     f"| {method('tree')} |")
+    return lines + ["", "Ожидаемый вердикт задан в пресете генератора (`expected_verdict`); ¹ — у пресета его нет, "
+                         "он вычислен по truth правилами `make_verdict`.", ""]
 
 
 def summary_table(rows, out):
@@ -404,12 +407,13 @@ def main(argv=None):
     here = os.path.dirname(os.path.abspath(__file__))
     ap.add_argument("--csv", default=os.path.join(here, "results.csv"))
     ap.add_argument("--baseline-csv", default=os.path.join(here, "baseline.csv"),
-                    help="bench --only baseline output (kept apart so the long runs need not be redone)")
+                    help="if present, its baseline rows replace those in --csv (bench --only baseline output)")
     ap.add_argument("--out", default=here)
     a = ap.parse_args(argv)
     rows = load(a.csv)
-    base = load(a.baseline_csv) if os.path.exists(a.baseline_csv) else []
-    rows = [r for r in rows if r["experiment"] != "baseline"] + base
+    if os.path.exists(a.baseline_csv):
+        rows = [r for r in rows if r["experiment"] != "baseline"] + load(a.baseline_csv)
+    base = any(r["experiment"] == "baseline" for r in rows)
     os.makedirs(a.out, exist_ok=True)
     plot_time(rows, a.out)
     plot_extrapolation(rows, a.out)
