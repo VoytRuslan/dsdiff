@@ -1,0 +1,33 @@
+{"sample_id": "images/img_000.jpg", "content_hash": "bf2b8765", "group": "train", "labels": ["cat"], "metadata": {"width": 800, "height": 600, "source": "cam7", "captured_at": "2026-04-02"}}
+{"sample_id": "images/img_001.jpg", "content_hash": "97c1d6b6", "group": "train", "labels": ["café", "car"], "metadata": {"width": 800, "height": 600, "source": "cam6", "captured_at": "2026-05-09"}}
+{"sample_id": "images/img_002.jpg", "content_hash": "8cbe71b3", "group": "train", "labels": ["dog"], "metadata": {"width": 1920, "height": 1080, "source": "cam1", "captured_at": "2026-01-26"}}
+{"sample_id": "images/img_003.jpg", "content_hash": "cb16f3c9", "group": "train", "labels": ["café"], "metadata": {"width": 320, "height": 240, "source": "cam3", "captured_at": "2026-01-05"}}
+{"sample_id": "images/img_004.jpg", "content_hash": "97a5eb00", "group": "train", "labels": ["car"], "metadata": {"width": 1920, "height": 1080, "source": "cam8", "captured_at": "2026-05-18"}}
+{"sample_id": "images/img_005.jpg", "content_hash": "f90ff33e", "group": "train", "labels": ["cat"], "metadata": {"width": 1280, "height": 720, "source": "cam8", "captured_at": "2026-05-26"}}
+{"sample_id": "images/img_006.jpg", "content_hash": "49807e9e", "group": "train", "labels": ["café", "cat", "dog"], "metadata": {"width": 1920, "height": 1080, "source": "cam5", "captured_at": "2026-03-14"}}
+{"sample_id": "images/img_007.jpg", "content_hash": "d112b194", "group": "train", "labels": ["dog"], "metadata": {"width": 320, "height": 240, "source": "cam8", "captured_at": "2026-03-26"}}
+{"sample_id": "images/img_008.jpg", "content_hash": "7ca1b6fb", "group": "train", "labels": ["señal"], "metadata": {"width": 1024, "height": 768, "source": "cam1", "captured_at": "2026-06-09"}}
+{"sample_id": "images/img_009.jpg", "content_hash": "adce9f75", "group": "train", "labels": ["dog"], "metadata": {"width": 640, "height": 480, "source": "cam4", "captured_at": "2026-09-29"}}
+{"sample_id": "images/img_010.jpg", "content_hash": "cfc08bb9", "group": "train", "labels": ["señal"], "metadata": {"width": 1024, "height": 768, "source": "cam7", "captured_at": "2026-10-20"}}
+{"sample_id": "images/img_011.jpg", "content_hash": "33c755b2", "group": "train", "labels": ["café"], "metadata": {"width": 1280, "height": 720, "source": "cam4", "captured_at": "2026-06-27"}}
+{"sample_id": "images/img_012.jpg", "content_hash": "d481c8e5", "group": "train", "labels": ["bird", "cat"], "metadata": {"width": 1024, "height": 768, "source": "cam3", "captured_at": "2026-02-08"}}
+{"sample_id": "images/img_013.jpg", "content_hash": "a6654ed1", "group": "train", "labels": ["bird", "café", "cat"], "metadata": {"width": 640, "height": 480, "source": "cam2", "captured_at": "2026-10-01"}}
+{"sample_id": "images/fotó_014.jpg", "content_hash": "77dd94f5", "group": "train", "labels": ["cat"], "metadata": {"width": 1024, "height": 768, "source": "cam1", "captured_at": "2026-10-05"}}
+{"sample_id": "images/img_015.jpg", "content_hash": "d4cfc17a", "group": "train", "labels": ["señal"], "metadata": {"width": 1920, "height": 1080, "source": "cam1", "captured_at": "2026-07-11"}}
+{"sample_id": "images/img_016.jpg", "content_hash": "d4cfc17a", "group": "train", "labels": ["señal"], "metadata": {"width": 1920, "height": 1080, "source": "cam1", "captured_at": "2026-07-11"}}
+{"sample_id": "images/img_017.jpg", "content_hash": "94058e17", "group": "train", "labels": ["cat"], "metadata": {"width": 1280, "height": 720, "source": "cam5", "captured_at": "2026-01-29"}}
+{"sample_id": "images/img_018.jpg", "content_hash": "51513640", "group": "train", "labels": ["cat", "dog"], "metadata": {"width": 800, "height": 600, "source": "cam6", "captured_at": "2026-08-09"}}
+{"sample_id": "images/img_019.jpg", "content_hash": "13436be2", "group": "train", "labels": ["café", "dog"], "metadata": {"width": 1280, "height": 720, "source": "cam3", "captured_at": "2026-09-15"}}
+{"sample_id": "images/img_020.jpg", "content_hash": "0167d5ed", "group": "val", "labels": ["cat"], "metadata": {"width": 1920, "height": 1080, "source": "cam5", "captured_at": "2026-08-05"}}
+{"sample_id": "images/img_021.jpg", "content_hash": "48acd0e5", "group": "val", "labels": ["café", "cat", "dog"], "metadata": {"width": 1024, "height": 768, "source": "cam1", "captured_at": "2026-10-04"}}
+{"sample_id": "images/img_022.jpg", "content_hash": "f9766b42", "group": "val", "labels": ["bird"], "metadata": {"width": 800, "height": 600, "source": "cam6", "captured_at": "2026-08-24"}}
+{"sample_id": "images/img_023.jpg", "content_hash": "ff720bfa", "group": "test", "labels": ["dog"], "metadata": {"width": 320, "height": 240, "source": "cam6", "captured_at": "2026-06-02"}}
+{"sample_id": "images/img_024.jpg", "content_hash": "e03ee040", "group": "test", "labels": ["cat"], "metadata": {"width": 640, "height": 480, "source": "cam3", "captured_at": "2026-09-29"}}
+{"sample_id": "images/img_025.jpg", "content_hash": "028fb13c", "group": "test", "labels": ["café"], "metadata": {"width": 640, "height": 480, "source": "cam2", "captured_at": "2026-02-04"}}
+{"sample_id": "images/img_026.jpg", "content_hash": "1378a678", "group": "train", "labels": ["señal"], "metadata": {"width": 1280, "height": 720, "source": "cam5", "captured_at": "2026-09-04"}}
+{"sample_id": "images/img_027.jpg", "content_hash": "1378a678", "group": "train", "labels": ["señal"], "metadata": {"width": 1280, "height": 720, "source": "cam5", "captured_at": "2026-09-04"}}
+{"sample_id": "images/img_028.jpg", "content_hash": "5094d79e", "group": "train", "labels": ["café"], "metadata": {"width": 800, "height": 600, "source": "cam5", "captured_at": "2026-03-06"}}
+{"sample_id": "images/img_029.jpg", "content_hash": "5094d79e", "group": "train", "labels": ["café"], "metadata": {"width": 800, "height": 600, "source": "cam5", "captured_at": "2026-03-06"}}
+{"sample_id": "images/img_030.jpg", "content_hash": "1ccd1a53", "group": "train", "labels": ["café"], "metadata": {"width": 1024, "height": 768, "source": "cam2", "captured_at": "2026-03-21"}}
+{"sample_id": "images/img_031.jpg", "content_hash": "a41dabde", "group": "train", "labels": ["bird", "cat"], "metadata": {"width": 1920, "height": 1080, "source": "cam3", "captured_at": "2026-10-24"}}
+{"sample_id": "images/img_032.jpg", "content_hash": "2cdc493b", "group": "train", "labels": ["café", "cat"], "metadata": {"width": 1024, "height": 768, "source": "cam4", "captured_at": "2026-02-14"}}

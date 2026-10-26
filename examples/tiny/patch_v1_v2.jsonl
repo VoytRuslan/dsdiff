@@ -1,0 +1,32 @@
+{"op": "header", "format": "dsdiff-patch/1", "base": "7e229e2e20b78bab3a52fb394b4264f8", "target": "c63b36fb893af7805199ebf1b22bf5a8", "n_base": 33, "n_target": 35}
+{"op": "delete", "id": "images/img_006.jpg", "h": "49807e9e"}
+{"op": "rename", "id": "images/img_000.jpg", "h": "bf2b8765", "to": "images/r1_000.jpg"}
+{"op": "rename", "id": "images/img_002.jpg", "h": "8cbe71b3", "to": "images/r1_002.jpg"}
+{"op": "rename", "id": "images/img_016.jpg", "h": "d4cfc17a", "to": "images/r1_016.jpg"}
+{"op": "rename", "id": "images/img_025.jpg", "h": "028fb13c", "to": "images/r1_025.jpg"}
+{"op": "rename", "id": "images/img_026.jpg", "h": "1378a678", "to": "images/r1_026.jpg"}
+{"op": "rename", "id": "images/img_027.jpg", "h": "1378a678", "to": "images/r1_027.jpg"}
+{"op": "rename", "id": "images/img_020.jpg", "h": "0167d5ed", "to": "images/img_025.jpg"}
+{"op": "rename", "id": "images/img_019.jpg", "h": "13436be2", "to": "images/img_020.jpg"}
+{"op": "rename", "id": "images/img_017.jpg", "h": "94058e17", "to": "__tmp__/0"}
+{"op": "rename", "id": "images/img_018.jpg", "h": "51513640", "to": "images/img_017.jpg"}
+{"op": "rename", "id": "__tmp__/0", "h": "94058e17", "to": "images/img_018.jpg"}
+{"op": "update", "id": "images/fotó_014.jpg", "h": "77dd94f5", "kind": "cosmetic", "set": {"sample_id": "images/fotó_014.jpg"}}
+{"op": "update", "id": "images/img_001.jpg", "h": "97c1d6b6", "kind": "relabel", "set": {"labels": ["café"]}}
+{"op": "update", "id": "images/r1_002.jpg", "h": "8cbe71b3", "kind": "relabel", "set": {"labels": ["cat"]}}
+{"op": "update", "id": "images/img_003.jpg", "h": "cb16f3c9", "kind": "content_replace", "set": {"content_hash": "c7ed2da9"}}
+{"op": "update", "id": "images/img_004.jpg", "h": "97a5eb00", "kind": "group_move", "set": {"group": "test"}}
+{"op": "update", "id": "images/img_005.jpg", "h": "f90ff33e", "kind": "metadata_change", "set": {"metadata": {"width": 1280, "height": 720, "source": "cam6", "captured_at": "2026-05-26"}}}
+{"op": "update", "id": "images/img_007.jpg", "h": "d112b194", "kind": "cosmetic", "set": {"sample_id": "IMAGES/IMG_007.JPG"}}
+{"op": "update", "id": "images/img_008.jpg", "h": "7ca1b6fb", "kind": "cosmetic", "set": {"content_hash": "7CA1B6FB"}}
+{"op": "update", "id": "images/img_009.jpg", "h": "adce9f75", "kind": "cosmetic", "set": {"sample_id": "images\\img_009.jpg"}}
+{"op": "update", "id": "images/img_010.jpg", "h": "cfc08bb9", "kind": "cosmetic", "set": {"sample_id": "./images/img_010.jpg"}}
+{"op": "update", "id": "images/img_011.jpg", "h": "33c755b2", "kind": "cosmetic", "set": {"metadata": {"captured_at": "2026-06-27", "source": "cam4", "height": 720, "width": 1280}}}
+{"op": "update", "id": "images/img_012.jpg", "h": "d481c8e5", "kind": "cosmetic", "set": {"labels": ["cat", "bird"]}}
+{"op": "update", "id": "images/img_013.jpg", "h": "a6654ed1", "kind": "cosmetic", "set": {"metadata": {"width": 640, "height": 480, "source": "cam2", "captured_at": "2026-10-01", "export_time": "2026-10-21T13:13:31Z"}}}
+{"op": "update", "id": "images/img_023.jpg", "h": "ff720bfa", "kind": "group_move", "set": {"group": "train"}}
+{"op": "update", "id": "images/img_029.jpg", "h": "5094d79e", "kind": "group_move", "set": {"group": "test"}}
+{"op": "update", "id": "images/img_032.jpg", "h": "2cdc493b", "kind": "cosmetic", "set": {"sample_id": "images/img_032.jpg "}}
+{"op": "add", "record": {"sample_id": "images/fotó_034.jpg", "content_hash": "e03ee040", "group": "train", "labels": ["cat"], "metadata": {"width": 640, "height": 480, "source": "cam3", "captured_at": "2026-09-29"}}}
+{"op": "add", "record": {"sample_id": "images/img_033.jpg", "content_hash": "15afc974", "group": "train", "labels": ["café", "cat"], "metadata": {"width": 1024, "height": 768, "source": "cam5", "captured_at": "2026-09-28"}}}
+{"op": "add", "record": {"sample_id": "images/img_035.jpg", "content_hash": "1ccd1a53", "group": "test", "labels": ["café"], "metadata": {"width": 1024, "height": 768, "source": "cam2", "captured_at": "2026-03-21"}}}
