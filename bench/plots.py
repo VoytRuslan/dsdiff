@@ -53,7 +53,7 @@ def values(rows, column, **keys):
 
 
 def num(n):
-    return f"{int(n):,}".replace(",", " ")
+    return f"{int(n):,}".replace(",", "\u00a0")  # no-break space: a wrapped caption keeps the number whole
 
 
 def human_seconds(s):
@@ -124,7 +124,7 @@ def plot_time(rows, out):
     get = lambda method, d, **k: val(rows, "seconds", experiment="flat_vs_tree", n=n, d=d, method=method, **k)
     flat = [get("flat", d) for d in ds]
     tree = [get("tree", d, buckets=b) for d in ds]
-    commit = [get("commit", d, buckets=b) for d in [0] + ds]
+    first, nexts = get("commit", 0, buckets=b), [get("commit", d, buckets=b) for d in ds]
     mid = ds[len(ds) // 2 - 1] if len(ds) > 1 else ds[0]
     fig, ax = plt.subplots(figsize=(10, 6.2), dpi=200)
     close = tree[-1] > flat[-1] / 3  # end labels would collide: push them apart
@@ -136,8 +136,9 @@ def plot_time(rows, out):
     ax.set_xlabel("число изменённых записей", color=INK2, fontsize=11.5)
     style(ax, f"При {mid} отличиях дерево находит их в {get('flat', mid) / get('tree', mid, buckets=b):.0f} раз быстрее",
           f"{num(n)} записей, {num(b)} бакетов по ~{n / b:.0f} записей; плоский diff читает обе версии целиком, "
-          f"дерево — только отличающиеся бакеты",
-          f"commit — один раз на версию, O(n): ≈ {human_seconds(sum(commit) / len(commit))} при n = {num(n)}. "
+          f"дерево — только отличающиеся бакеты. Время — минимум из 3 прогонов после прогрева",
+          f"commit — один раз на версию, O(n): {human_seconds(first)} для первой версии и ≈ "
+          f"{human_seconds(sum(nexts) / len(nexts))} для каждой следующей при n = {num(n)}. "
           f"Сравнение любой пары закоммиченных версий — O(d).")
     fig.savefig(os.path.join(out, "time_vs_d.png"), facecolor=SURFACE)
     plt.close(fig)
@@ -165,6 +166,9 @@ def plot_extrapolation(rows, out, d=100):
     flat_rows = [(n, val(rows, "seconds", experiment="flat_vs_tree", n=n, d=dd, method="flat"))
                  for n in ns for dd in values(rows, "d", experiment="flat_vs_tree", n=n) if dd]
     c_flat = sum(t for _, t in flat_rows) / sum(n for n, _ in flat_rows)
+    commits = [val(rows, "seconds", experiment="flat_vs_tree", n=n0, d=dd, buckets=adaptive_buckets(rows, n0),
+                   method="commit") for dd in values(rows, "d", experiment="flat_vs_tree", n=n0) if dd]
+    c_commit = sum(commits) / len(commits) / n0  # seconds per record of a commit on top of a parent
     # tree: seconds = a * objects read + b * records read (a, b >= 0), fitted on the adaptive runs
     fit = []
     for n in ns:
@@ -186,7 +190,7 @@ def plot_extrapolation(rows, out, d=100):
 
     xs = [10 ** k for k in range(6, 10)]
     flat_est, tree_ests = [c_flat * n for n in xs], [tree_est(n) for n in xs]
-    fig, ax = plt.subplots(figsize=(10, 5.6), dpi=200)
+    fig, ax = plt.subplots(figsize=(10, 6.2), dpi=200)
     line(ax, xs, flat_est, ORANGE, "плоский diff (оценка)", "плоский", dashed=True)
     line(ax, xs, tree_ests, BLUE, "diff по дереву (оценка)", "дерево", dashed=True)
     ax.plot([n0], [val(rows, "seconds", experiment="flat_vs_tree", n=n0, d=d, method="flat")], "o",
@@ -203,7 +207,9 @@ def plot_extrapolation(rows, out, d=100):
           f"Экстраполяция замеров при n = {', '.join(num(n) for n in ns)}: плоский ∝ n, дерево ≈ "
           + (f"{coef[0] * 1e6:.0f} мкс на прочитанный узел + " if coef[0] else "")
           + f"{coef[1] * 1e6:.1f} мкс на запись отличающихся бакетов. Плоскому на 1 млрд нужно ещё ~"
-          f"{2 * BYTES_PER_RECORD * xs[-1] / 1e12:.0f} ТБ памяти; commit остаётся O(n)")
+          f"{2 * BYTES_PER_RECORD * xs[-1] / 1e12:.0f} ТБ памяти. Замеры — минимум из 3 прогонов",
+          f"commit миллиардной версии — O(n), один раз при поступлении (≈ {human_seconds(c_commit * xs[-1])} "
+          f"по линейной оценке от замера при n = {num(n0)}); потом любое сравнение с ней — по дереву")
     fig.savefig(os.path.join(out, "extrapolation.png"), facecolor=SURFACE)
     plt.close(fig)
 
@@ -380,7 +386,10 @@ def summary_table(rows, out):
                 f"| {num(cell(b, 'buckets_read'))} / {num(cell(b, 'records_read'))} "
                 f"| {human_seconds(val(rows, 'seconds', method='commit', buckets=FIXED, **k))} "
                 f"| {human_seconds(val(rows, 'seconds', method='commit', buckets=b, **k))} |")
-        lines.append("")
+        first = lambda bb: human_seconds(val(rows, "seconds", experiment="flat_vs_tree", n=n, d=0,
+                                             method="commit", buckets=bb))
+        lines += ["", f"Первый commit, в пустое хранилище: {first(FIXED)} при 4096 бакетах, {first(b)} при "
+                      f"{num(b)}. Время — минимум из 3 прогонов после прогрева.", ""]
     vs = values(rows, "version", experiment="storage", method="copies", scenario="default")
     n = values(rows, "n", experiment="storage")[0]
     b = next(x for x in values(rows, "buckets", experiment="storage") if x != FIXED)
