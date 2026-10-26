@@ -1,0 +1,7 @@
+data/
+.dsdiff/
+__pycache__/
+.pytest_cache/
+bench/*.csv
+!bench/results.csv
+.DS_Store

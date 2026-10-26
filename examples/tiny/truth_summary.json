@@ -1,0 +1,221 @@
+{
+  "preset": "tiny",
+  "seed": 1,
+  "params": {
+    "n": 33,
+    "seed": 1,
+    "versions": 2,
+    "hash_bits": 32,
+    "with_path": false,
+    "sort_output": true,
+    "dirty": false,
+    "split": [
+      0.8,
+      0.1,
+      0.1
+    ],
+    "pad": 3,
+    "shard": false,
+    "p_rename": 0,
+    "p_relabel": 0,
+    "p_rename_relabel": 0,
+    "p_replace": 0,
+    "p_move": 0,
+    "p_meta": 0,
+    "p_delete": 0,
+    "p_add": 0,
+    "p_noise": 0,
+    "noise_rules": [
+      "id_case",
+      "hash_case",
+      "backslash",
+      "dot_slash",
+      "label_order",
+      "meta_order",
+      "export_time",
+      "nfd",
+      "id_whitespace"
+    ],
+    "p_dup_content": 0,
+    "n_leaks": 2,
+    "leak_at_version": null,
+    "leak_direction": "both",
+    "n_rename_cycles": 2,
+    "n_dup_ids": 2,
+    "n_conflicts": 3,
+    "n_add": 1,
+    "change_groups": null,
+    "preset": "tiny"
+  },
+  "n_records": {
+    "v1": 33,
+    "v2": 35
+  },
+  "changes_by_combination": {
+    "v1_v2": {
+      "added": 1,
+      "added+leak": 2,
+      "content_replaced": 1,
+      "cosmetic": 9,
+      "deleted": 1,
+      "group_moved": 1,
+      "group_moved+leak_by_move": 1,
+      "group_moved+leak_by_move+leak": 1,
+      "metadata_changed": 1,
+      "relabeled": 1,
+      "renamed": 4,
+      "renamed+relabeled": 1,
+      "renamed+rename_cycle": 5
+    }
+  },
+  "changes_by_type": {
+    "v1_v2": {
+      "added": 3,
+      "content_replaced": 1,
+      "cosmetic": 9,
+      "deleted": 1,
+      "group_moved": 3,
+      "leak": 3,
+      "leak_by_move": 2,
+      "metadata_changed": 1,
+      "relabeled": 2,
+      "rename_cycle": 5,
+      "renamed": 10
+    }
+  },
+  "duplicate_content_records_v1": 3,
+  "leaks": [
+    {
+      "kind": "copy",
+      "direction": "train->test",
+      "version": 2,
+      "content_hash": "1ccd1a53",
+      "train_id": "images/img_030.jpg",
+      "test_id": "images/img_035.jpg"
+    },
+    {
+      "kind": "move",
+      "version": 2,
+      "content_hash": "5094d79e",
+      "id": "images/img_029.jpg"
+    },
+    {
+      "kind": "move",
+      "version": 2,
+      "content_hash": "97a5eb00",
+      "id": "images/img_004.jpg"
+    },
+    {
+      "kind": "copy",
+      "direction": "test->train",
+      "version": 2,
+      "content_hash": "e03ee040",
+      "train_id": "images/fotó_034.jpg",
+      "test_id": "images/img_024.jpg"
+    }
+  ],
+  "expected_validation_errors": [],
+  "skipped": [],
+  "duplicates_v1": [
+    {
+      "content_hash": "1378a678",
+      "ids": [
+        "images/img_026.jpg",
+        "images/img_027.jpg"
+      ]
+    },
+    {
+      "content_hash": "5094d79e",
+      "ids": [
+        "images/img_028.jpg",
+        "images/img_029.jpg"
+      ]
+    },
+    {
+      "content_hash": "d4cfc17a",
+      "ids": [
+        "images/img_015.jpg",
+        "images/img_016.jpg"
+      ]
+    }
+  ],
+  "duplicates_v2": [
+    {
+      "content_hash": "1378a678",
+      "ids": [
+        "images/r1_026.jpg",
+        "images/r1_027.jpg"
+      ]
+    },
+    {
+      "content_hash": "1ccd1a53",
+      "ids": [
+        "images/img_030.jpg",
+        "images/img_035.jpg"
+      ]
+    },
+    {
+      "content_hash": "5094d79e",
+      "ids": [
+        "images/img_028.jpg",
+        "images/img_029.jpg"
+      ]
+    },
+    {
+      "content_hash": "d4cfc17a",
+      "ids": [
+        "images/img_015.jpg",
+        "images/r1_016.jpg"
+      ]
+    },
+    {
+      "content_hash": "e03ee040",
+      "ids": [
+        "images/fotó_034.jpg",
+        "images/img_024.jpg"
+      ]
+    }
+  ],
+  "leaks_v1": [],
+  "leaks_v2": [
+    {
+      "content_hash": "1ccd1a53",
+      "records": [
+        {
+          "id": "images/img_030.jpg",
+          "group": "train"
+        },
+        {
+          "id": "images/img_035.jpg",
+          "group": "test"
+        }
+      ]
+    },
+    {
+      "content_hash": "5094d79e",
+      "records": [
+        {
+          "id": "images/img_028.jpg",
+          "group": "train"
+        },
+        {
+          "id": "images/img_029.jpg",
+          "group": "test"
+        }
+      ]
+    },
+    {
+      "content_hash": "e03ee040",
+      "records": [
+        {
+          "id": "images/fotó_034.jpg",
+          "group": "train"
+        },
+        {
+          "id": "images/img_024.jpg",
+          "group": "test"
+        }
+      ]
+    }
+  ]
+}
