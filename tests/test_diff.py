@@ -103,6 +103,7 @@ def test_leaks_match_truth(run):
 def test_verdict(run):
     name, steps = run
     if name in VERDICT:
+        assert steps[0].summary["params"]["expected_verdict"] == VERDICT[name]  # set in the preset
         assert steps[0].report["verdict"]["code"] == VERDICT[name]
 
 

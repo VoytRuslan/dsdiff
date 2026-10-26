@@ -1,42 +1,47 @@
-"""The id-first baseline (v0): what it gets right and where it breaks, on the bench scenarios."""
+"""The id-first baseline (v0): what it gets right and where it breaks, on the gen.BREAKS presets."""
 import json
 
 import pytest
 
 from dsdiff.baseline_idfirst import diff_idfirst
-from dsdiff.bench import BREAKS, QUIET, score, truth_verdict
+from dsdiff.bench import score
 from dsdiff.diff import diff
+from dsdiff.gen import BREAKS
 from dsdiff.gen import main as gen
 from dsdiff.jsonl import read_jsonl
 
-V0_VERDICT_WRONG = {"swaps", "id_noise", "train_to_test", "test_relabel"}
+# what each scenario is meant to show, by its meaning; the presets must say the same
+MEANT = {"break_swaps": "trust", "break_id_noise": "trust", "break_train_to_test": "do_not_trust",
+         "break_test_relabel": "metrics_not_comparable"}
 
 
 @pytest.fixture(scope="module", params=list(BREAKS))
 def scenario(request, tmp_path_factory):
-    _, args = BREAKS[request.param]
-    if args[0] != "--preset":
-        args = ["--n", "10000", "--seed", "5"] + QUIET + args
     out = tmp_path_factory.mktemp(request.param)
-    gen(args + ["--out", str(out)])
+    gen(["--preset", request.param, "--out", str(out)])
     summary = json.loads((out / "truth_summary.json").read_text(encoding="utf-8"))
     old, new, truth = (read_jsonl(out / f) for f in ("v1.jsonl", "v2.jsonl", "truth_v1_v2.jsonl"))
-    return request.param, old, new, truth, truth_verdict(old, new, truth, summary, 2)
+    return request.param, old, new, truth, summary["params"]["expected_verdict"]
+
+
+def test_expected_verdict_in_preset(scenario):
+    name, *_, expected = scenario
+    assert expected == MEANT[name]
 
 
 def test_ours_exact(scenario):
-    _, old, new, truth, want = scenario
+    _, old, new, truth, expected = scenario
     r = diff(old, new).to_report()
     assert score(r["changes"], truth) == (0, 0)
-    assert r["verdict"]["code"] == want
+    assert r["verdict"]["code"] == expected
 
 
 def test_v0_breaks(scenario):
-    name, old, new, truth, want = scenario
+    name, old, new, truth, expected = scenario
     v0 = diff_idfirst(old, new)
-    assert (v0["verdict"]["code"] != want) == (name in V0_VERDICT_WRONG)
+    assert v0["verdict"]["code"] != expected
     missed, false = score(v0["changes"], truth)
-    if name in ("swaps", "id_noise"):
+    if name in ("break_swaps", "break_id_noise"):
         assert missed == len(truth) and false > 0  # every swap / noisy id becomes something else
 
 

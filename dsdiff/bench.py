@@ -8,8 +8,10 @@
                   both bucket counts: object bytes, object count, du of .dsdiff, and the bytes of
                   10 full JSONL copies, plain and gzipped
     baseline      v0 (id-first, dsdiff.baseline_idfirst) / flat diff / tree diff on the presets and on
-                  one-phenomenon scenarios: change rows wrong against the truth (missed + false,
-                  ambiguous rename groups left out), verdict and the truth's, leaks found, seconds
+                  the one-phenomenon presets gen.BREAKS: change rows wrong against the truth (missed +
+                  false, ambiguous rename groups left out), verdict against the preset's
+                  expected_verdict (computed from the truth only where the preset has none), leaks
+                  found, seconds
     collisions    hash_bits in {16, 20, 24, 32, 64}, n = 1e5: renames the diff reports that the
                   truth does not (unrelated records whose hashes collide)
 
@@ -29,6 +31,7 @@ import time
 
 from .baseline_idfirst import diff_idfirst
 from .diff import diff
+from .gen import BREAKS
 from .gen import main as gen
 from .jsonl import read_jsonl, write_jsonl
 from .normalize import normalize_name
@@ -176,17 +179,9 @@ BASELINE_SETS = {  # name -> generator args
     "test_relabel": ["--preset", "test_relabel"], "test_to_train": ["--preset", "test_to_train"],
     "n30000_seed3": ["--n", "30000", "--seed", "3"],
 }
-BREAKS = {  # "what breaks": one phenomenon each on a quiet base (n = 10000), name -> (label, args)
-    "swaps": ("обмены имён", ["--n-rename-cycles", "100"]),
-    "id_noise": ("шум в id", ["--p-noise", "0.05", "--noise-rules", "id_case", "backslash", "dot_slash",
-                              "nfd", "id_whitespace"]),
-    "train_to_test": ("перенос train→test", ["--p-move", "0.02"]),
-    "test_relabel": ("смена меток в test", ["--preset", "test_relabel"] + QUIET),  # its forced test relabels only
-}
-
-
 def truth_verdict(old, new, truth, summary, v):
-    """The verdict the truth calls for, by the rules of dsdiff.diff.make_verdict."""
+    """The verdict the truth calls for by the rules of dsdiff.diff.make_verdict; only for data whose
+    preset sets no expected_verdict (tiny, random runs), where nothing else says what is right."""
     leaks_now = {x["content_hash"] for x in summary[f"leaks_v{v}"]}
     leaks_before = {x["content_hash"] for x in summary[f"leaks_v{v - 1}"]}
     events = [x for x in summary["leaks"] if x["version"] == v]
@@ -223,20 +218,19 @@ def score(rows, truth):
 
 def baseline(res, work, sets, breaks):
     jobs = [(name, None, args) for name, args in sets.items()]
-    jobs += [(name, label, args) for name, (label, args) in breaks.items()]
-    for name, label, args in jobs:
-        scenario = name if label is None else f"break_{name}"
+    jobs += [(name, breaks[name][0], ["--preset", name]) for name in breaks]
+    for scenario, label, args in jobs:
         print(f"baseline {scenario}", flush=True)
         d = os.path.join(work, f"base_{scenario}")
-        if label is not None and args[0] != "--preset":
-            args = ["--n", "10000", "--seed", "5"] + QUIET + args
         generate(d, *args)
         old, new = read_jsonl(os.path.join(d, "v1.jsonl")), read_jsonl(os.path.join(d, "v2.jsonl"))
         truth = read_jsonl(os.path.join(d, "truth_v1_v2.jsonl"))
         with open(os.path.join(d, "truth_summary.json"), encoding="utf-8") as f:
             summary = __import__("json").load(f)
         keys = dict(experiment="baseline", scenario=scenario, label=label or "", n=len(old))
-        res.add("verdict", truth_verdict(old, new, truth, summary, 2), method="truth", **keys)
+        expected = summary["params"]["expected_verdict"]
+        res.add("verdict", expected or truth_verdict(old, new, truth, summary, 2), method="expected", **keys)
+        res.add("verdict_source", "preset" if expected else "truth_rules", method="expected", **keys)
         res.add("leaks", len(summary["leaks_v2"]) + sum(x["kind"] == "move" and x["version"] == 2
                                                        for x in summary["leaks"]), method="truth", **keys)
         res.add("changes", len(truth), method="truth", **keys)

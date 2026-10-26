@@ -45,7 +45,8 @@
     "n_conflicts": 3,
     "n_add": null,
     "change_groups": null,
-    "preset": "story"
+    "preset": "story",
+    "expected_verdict": "do_not_trust"
   },
   "n_records": {
     "v1": 10000,

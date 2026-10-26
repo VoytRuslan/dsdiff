@@ -84,6 +84,7 @@ class Config:
     forced: dict = field(default_factory=dict)       # (step, n) -> (kind, arg)
     forced_dups: dict = field(default_factory=dict)  # n -> source n
     preset: str | None = None
+    expected_verdict: str | None = None  # what the preset is meant to show: the diff's verdict code
 
 
 def digest(seed, tag, *keys, size=16):
@@ -754,7 +755,7 @@ def tiny_config():
 def story_config():
     """The customer's story: the model was not retrained, yet its metric on v2 went up. ~10% of the
     test set are now training examples: half moved from train (leak_by_move), half copied (train->test)."""
-    cfg = Config(n=10_000, seed=7, preset="story", leak_at_version=2, leak_direction="train->test",
+    cfg = Config(n=10_000, seed=7, preset="story", expected_verdict="do_not_trust", leak_at_version=2, leak_direction="train->test",
                  n_rename_cycles=0, p_rename=0, p_relabel=0, p_rename_relabel=0, p_replace=0, p_move=0,
                  p_meta=0.002, p_delete=0, p_add=0, p_noise=0.02, p_dup_content=0)
     g = Gen(cfg)
@@ -770,12 +771,14 @@ def story_config():
 
 def clean_config():
     """Changes only in train, no leaks, test (and val) untouched: verdict "trust"."""
-    return Config(n=10_000, seed=11, preset="clean", change_groups=("train",), p_move=0, n_leaks=0)
+    return Config(n=10_000, seed=11, preset="clean", expected_verdict="trust", change_groups=("train",), p_move=0,
+                  n_leaks=0)
 
 
 def test_relabel_config():
     """As clean, plus ~5% of test relabeled and nothing else in test: verdict "metrics not comparable"."""
-    cfg = Config(n=10_000, seed=12, preset="test_relabel", change_groups=("train",), p_move=0, n_leaks=0)
+    cfg = Config(n=10_000, seed=12, preset="test_relabel", expected_verdict="metrics_not_comparable",
+                 change_groups=("train",), p_move=0, n_leaks=0)
     g = Gen(cfg)
     test = sorted((i for i in range(cfg.n) if g.attrs(i)["group"] == "test"),
                   key=lambda i: digest(cfg.seed, "relabel-test", i))
@@ -785,7 +788,36 @@ def test_relabel_config():
 
 def test_to_train_config():
     """Copies of test examples land in train, nothing moves: verdict "do not retrain"."""
-    return Config(n=10_000, seed=21, preset="test_to_train", leak_direction="test->train", p_move=0)
+    return Config(n=10_000, seed=21, preset="test_to_train", expected_verdict="do_not_retrain",
+                  leak_direction="test->train", p_move=0)
+
+
+QUIET = dict(p_rename=0, p_relabel=0, p_rename_relabel=0, p_replace=0, p_move=0, p_meta=0, p_delete=0, p_add=0,
+             p_noise=0, p_dup_content=0, n_leaks=0, n_rename_cycles=0)
+ID_RULES = ("id_case", "backslash", "dot_slash", "nfd", "id_whitespace")
+BREAKS = {  # "what breaks": one phenomenon on a quiet base each, preset -> (label, verdict, Config overrides)
+    "break_swaps": ("обмены имён", "trust", dict(n_rename_cycles=100)),
+    "break_id_noise": ("шум в id", "trust", dict(p_noise=0.05, noise_rules=ID_RULES)),
+    "break_train_to_test": ("перенос train→test", "do_not_trust", dict(p_move=0.02)),
+    "break_test_relabel": ("смена меток в test", "metrics_not_comparable", None),  # test_relabel, quieted
+}
+
+
+def break_config(name):
+    """A BREAKS scenario; its expected verdict is set by what the scenario is, not computed from the truth.
+    Swaps and noisy ids change nothing that matters (trust); records moved from train to test were
+    trained on (do not trust); relabeled test examples change the metric (not comparable)."""
+    _, verdict, extra = BREAKS[name]
+    if extra is None:
+        cfg = test_relabel_config()
+        for k, v in QUIET.items():
+            setattr(cfg, k, v)
+    else:
+        cfg = Config(n=10_000, seed=5, **QUIET)
+        for k, v in extra.items():
+            setattr(cfg, k, v)
+    cfg.preset, cfg.expected_verdict = name, verdict
+    return cfg
 
 
 def preset_configs(name):
@@ -801,6 +833,8 @@ def preset_configs(name):
         return [("", test_relabel_config())]
     if name == "test_to_train":
         return [("", test_to_train_config())]
+    if name in BREAKS:
+        return [("", break_config(name))]
     if name in sizes:
         return [("", Config(n=sizes[name], preset=name))]
     if name == "collisions":
@@ -815,7 +849,7 @@ def default_out(preset):
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="python -m dsdiff.gen", description=__doc__.splitlines()[0])
     ap.add_argument("--preset", choices=["tiny", "story", "clean", "test_relabel", "test_to_train",
-                                         "small", "medium", "large", "xl", "collisions"])
+                                         "small", "medium", "large", "xl", "collisions", *BREAKS])
     ap.add_argument("--out")
     for opt, typ in [("n", int), ("seed", int), ("versions", int), ("hash-bits", int), ("leak-at-version", int),
                      ("p-rename", float), ("p-relabel", float), ("p-rename-relabel", float),
