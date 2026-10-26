@@ -142,6 +142,10 @@ def cmd_cat_file(a):
 
 
 def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    if argv[:1] == ["ui"]:  # the local GUI lives in dsdiff/ui and has its own options
+        from .ui import main as ui_main
+        return ui_main(argv[1:])
     ap = argparse.ArgumentParser(prog="python -m dsdiff", description=__doc__.split(" — ")[1])
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("diff", help="diff two versions; print summary, verdict and stage timings")
