@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dsdiff</title>
+<link rel="stylesheet" href="/static/app.css">
+<script>
+  window.DSDIFF_TOKEN = "__DSDIFF_TOKEN__";
+  try {  // the theme before the first paint, so a dark page does not flash light
+    var t = localStorage.getItem("dsdiff-theme");
+    if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+  } catch (e) {}
+</script>
+</head>
+<body>
+<div class="app">
+  <nav class="side" aria-label="Разделы">
+    <div class="brand">dsdiff</div>
+    <a href="#/versions" data-nav="versions">Версии</a>
+    <a href="#/compare" data-nav="compare">Сравнение</a>
+    <a href="#/record" data-nav="record">Запись</a>
+    <a href="#/patch" data-nav="patch">Патч</a>
+    <div class="side-foot">
+      <button type="button" class="theme" id="theme" title="Тема: системная / светлая / тёмная">Тема: авто</button>
+    </div>
+  </nav>
+  <div class="main">
+    <header class="top">
+      <div class="where" id="where"></div>
+      <div class="jobs" id="jobs" aria-live="polite"></div>
+    </header>
+    <div id="error" class="error" role="alert" hidden></div>
+    <main id="view"></main>
+  </div>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>
