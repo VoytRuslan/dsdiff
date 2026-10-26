@@ -5,3 +5,4 @@ __pycache__/
 bench/*.csv
 !bench/results.csv
 .DS_Store
+ui-shots/
