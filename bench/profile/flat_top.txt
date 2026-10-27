@@ -1,0 +1,92 @@
+wall under cProfile: 55.6 s
+
+Tue Oct 27 10:33:39 2026    /Users/ruslan/claude/project-spb/bench/profile/flat.prof
+
+         134674250 function calls (134674246 primitive calls) in 55.333 seconds
+
+   Ordered by: internal time
+   List reduced from 121 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+  4000000   11.218    0.000   11.221    0.000 /Users/ruslan/miniconda3/lib/python3.13/json/encoder.py:205(iterencode)
+        2    7.868    3.934   10.368    5.184 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:132(validate)
+  2000000    5.095    0.000    5.097    0.000 /Users/ruslan/miniconda3/lib/python3.13/json/decoder.py:351(raw_decode)
+  4995308    4.261    0.000    7.829    0.000 {built-in method builtins.sorted}
+  1002228    2.277    0.000    2.277    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:198(<genexpr>)
+  4000000    1.821    0.000   14.290    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:24(_h)
+  4000000    1.806    0.000   15.487    0.000 /Users/ruslan/miniconda3/lib/python3.13/json/__init__.py:183(dumps)
+        1    1.753    1.753    7.113    7.113 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:177(match)
+  2000000    1.693    0.000    4.868    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:14(normalize_record)
+  4000000    1.550    0.000   13.426    0.000 /Users/ruslan/miniconda3/lib/python3.13/json/encoder.py:183(encode)
+  6003039    1.183    0.000    1.183    0.000 {method 'get' of 'dict' objects}
+        1    1.019    1.019    1.542    1.542 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:234(within_leaks)
+  4000000    0.997    0.000    0.997    0.000 {method 'hexdigest' of '_blake2.blake2b' objects}
+  2000000    0.933    0.000    1.654    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:7(normalize_name)
+  2000000    0.916    0.000    6.702    0.000 /Users/ruslan/miniconda3/lib/python3.13/json/decoder.py:340(decode)
+   998572    0.860    0.000    1.099    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:115(classify)
+  2000000    0.779    0.000   25.031    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:29(keys)
+ 14008592    0.696    0.000    0.696    0.000 {built-in method builtins.isinstance}
+  2000000    0.648    0.000   25.811    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:35(of)
+  2000000    0.520    0.000    6.661    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:40(line_hash)
+  2000000    0.512    0.000    7.396    0.000 /Users/ruslan/miniconda3/lib/python3.13/json/__init__.py:299(loads)
+        1    0.479    0.479   47.208   47.208 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:338(diff)
+  2010000    0.443    0.000    0.726    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:185(<lambda>)
+        2    0.426    0.213    7.868    3.934 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/jsonl.py:9(read_jsonl)
+  8924347    0.426    0.000    0.426    0.000 {method 'append' of 'list' objects}
+        1    0.423    0.423   55.500   55.500 /Users/ruslan/claude/project-spb/bench/profile/profile_stages.py:374(<lambda>)
+  4000000    0.418    0.000    0.418    0.000 {method 'match' of 're.Pattern' objects}
+  4761504    0.400    0.000    0.552    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:17(<genexpr>)
+        1    0.380    0.380    8.599    8.599 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:319(compare)
+  4000000    0.361    0.000    0.361    0.000 {method 'encode' of 'str' objects}
+  4007144    0.343    0.000    0.522    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:39(path_key)
+  4000000    0.309    0.000    0.309    0.000 {method 'lower' of 'str' objects}
+  4761504    0.279    0.000    0.279    0.000 {built-in method unicodedata.normalize}
+  4000000    0.263    0.000    0.263    0.000 {method 'strip' of 'str' objects}
+  4000000    0.256    0.000    0.256    0.000 /Users/ruslan/miniconda3/lib/python3.13/json/encoder.py:105(__init__)
+
+
+Tue Oct 27 10:33:39 2026    /Users/ruslan/claude/project-spb/bench/profile/flat.prof
+
+         134674250 function calls (134674246 primitive calls) in 55.333 seconds
+
+   Ordered by: cumulative time
+   List reduced from 121 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.423    0.423   55.500   55.500 /Users/ruslan/claude/project-spb/bench/profile/profile_stages.py:374(<lambda>)
+        1    0.479    0.479   47.208   47.208 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:338(diff)
+  2000000    0.648    0.000   25.811    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:35(of)
+  2000000    0.779    0.000   25.031    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:29(keys)
+  4000000    1.806    0.000   15.487    0.000 /Users/ruslan/miniconda3/lib/python3.13/json/__init__.py:183(dumps)
+  4000000    1.821    0.000   14.290    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:24(_h)
+  4000000    1.550    0.000   13.426    0.000 /Users/ruslan/miniconda3/lib/python3.13/json/encoder.py:183(encode)
+  4000000   11.218    0.000   11.221    0.000 /Users/ruslan/miniconda3/lib/python3.13/json/encoder.py:205(iterencode)
+        2    7.868    3.934   10.368    5.184 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:132(validate)
+        1    0.380    0.380    8.599    8.599 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:319(compare)
+        2    0.426    0.213    7.868    3.934 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/jsonl.py:9(read_jsonl)
+  4995308    4.261    0.000    7.829    0.000 {built-in method builtins.sorted}
+  2000000    0.512    0.000    7.396    0.000 /Users/ruslan/miniconda3/lib/python3.13/json/__init__.py:299(loads)
+        1    1.753    1.753    7.113    7.113 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:177(match)
+  2000000    0.916    0.000    6.702    0.000 /Users/ruslan/miniconda3/lib/python3.13/json/decoder.py:340(decode)
+  2000000    0.520    0.000    6.661    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:40(line_hash)
+  2000000    5.095    0.000    5.097    0.000 /Users/ruslan/miniconda3/lib/python3.13/json/decoder.py:351(raw_decode)
+  2000000    1.693    0.000    4.868    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:14(normalize_record)
+  1002228    2.277    0.000    2.277    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:198(<genexpr>)
+  2000000    0.933    0.000    1.654    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:7(normalize_name)
+        1    1.019    1.019    1.542    1.542 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:234(within_leaks)
+  6003039    1.183    0.000    1.183    0.000 {method 'get' of 'dict' objects}
+   998572    0.860    0.000    1.099    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:115(classify)
+  4000000    0.997    0.000    0.997    0.000 {method 'hexdigest' of '_blake2.blake2b' objects}
+  2010000    0.443    0.000    0.726    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:185(<lambda>)
+ 14008592    0.696    0.000    0.696    0.000 {built-in method builtins.isinstance}
+  4761504    0.400    0.000    0.552    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:17(<genexpr>)
+  4007144    0.343    0.000    0.522    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/diff.py:39(path_key)
+  8924347    0.426    0.000    0.426    0.000 {method 'append' of 'list' objects}
+  4000000    0.418    0.000    0.418    0.000 {method 'match' of 're.Pattern' objects}
+        2    0.000    0.000    0.404    0.202 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:45(multiset_digest)
+        2    0.115    0.058    0.404    0.202 {built-in method builtins.sum}
+  4000000    0.361    0.000    0.361    0.000 {method 'encode' of 'str' objects}
+  4000000    0.309    0.000    0.309    0.000 {method 'lower' of 'str' objects}
+  2000002    0.221    0.000    0.289    0.000 /Users/ruslan/claude/project-spb/bench/profile/../../dsdiff/normalize.py:47(<genexpr>)
+
+

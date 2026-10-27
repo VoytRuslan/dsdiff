@@ -1,0 +1,71 @@
+gen 6.8 s
+commit v1 42.4 s, 65536 buckets
+/private/tmp/claude-501/-Users-ruslan-claude-project-spb/c10d58e5-8e60-4891-9c81-4519752724ba/scratchpad/prof/v1.jsonl 209.478154 MB
+/private/tmp/claude-501/-Users-ruslan-claude-project-spb/c10d58e5-8e60-4891-9c81-4519752724ba/scratchpad/prof/v2.jsonl 209.485304 MB
+run 1: 76.8 s
+run 2: 66.1 s
+run 3: 64.9 s
+{
+ "read file (I/O + utf-8 + split)": 0.21568341700185556,
+ "json.loads": 7.9172927500039805,
+ "Rec.of (normalize + keys + hashes)": 29.966047583002364,
+ "validate": 6.228704416993423,
+ "match + classify (compare)": 18.847641625005053,
+ "leaks + verdict": 1.5308063749980647,
+ "multiset digest": 0.21477254100318532
+}
+run 1: 25.9 s, 20554 objects written
+run 2: 25.4 s, 20554 objects written
+run 3: 25.8 s, 20554 objects written
+{
+ "read file (I/O + utf-8 + split)": 0.10028491700359154,
+ "json.loads": 2.7379169999912847,
+ "Rec.of (normalize + keys + hashes)": 7.6817837090056855,
+ "bucket_of (blake2b 8 B, 2 per record)": 0.6293140420020791,
+ "json.dumps raw line for bucket body": 1.467846916988492,
+ "group into buckets (dicts, appends)": 1.80357458301296,
+ "id buckets: sort + join + encode": 0.32077254199248273,
+ "content buckets: sort + format (cbucket_body)": 0.7243574159947457,
+ "put_tree (objects: sha256, zlib, fs)": 5.304140125008416,
+ "multiset digest": 0.09201658399251755,
+ "validate": 3.8224780409946106,
+ "commit object + HEAD": 0.0008085420122370124
+}
+{
+ "put: header + concat": 0.04361799870093819,
+ "sha256": 0.12274528694979381,
+ "put: os.path.join": 0.049861283565405756,
+ "fs: os.path.exists": 0.45206547727866564,
+ "_objects": 133154.0,
+ "_bytes sha256": 269109165.0,
+ "fs: os.makedirs": 0.1201459603762487,
+ "zlib.compress": 1.043079509123345,
+ "fs: open + write + close": 2.0802306609548395,
+ "fs: os.replace": 1.1436922590364702,
+ "_bytes zlib in": 51546719.0,
+ "_bytes zlib out": 15915504.0
+}
+flat 55.6 s under cProfile
+  dsdiff Python code                 22.46 s   40.6%
+  json.dumps (C encoder)             14.83 s   26.8%
+  json.loads (C decoder)              6.52 s   11.8%
+  sorting (sorted/list.sort)          4.26 s    7.7%
+  other builtins                      3.97 s    7.2%
+  str methods                         1.56 s    2.8%
+  blake2b                             1.00 s    1.8%
+  sort key lambdas                    0.45 s    0.8%
+  unicodedata.normalize               0.28 s    0.5%
+  fs (os/io)                          0.00 s    0.0%
+commit 35.7 s under cProfile
+  dsdiff Python code                 10.61 s   29.8%
+  json.dumps (C encoder)             10.50 s   29.5%
+  fs (os/io)                          3.91 s   11.0%
+  json.loads (C decoder)              3.08 s    8.6%
+  other builtins                      2.43 s    6.8%
+  sorting (sorted/list.sort)          1.71 s    4.8%
+  str methods                         1.59 s    4.5%
+  blake2b                             0.80 s    2.2%
+  zlib                                0.74 s    2.1%
+  unicodedata.normalize               0.13 s    0.4%
+  sha256                              0.10 s    0.3%
+  hexdigest/digest                    0.03 s    0.1%

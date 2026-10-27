@@ -1,0 +1,136 @@
+{
+ "n_files": [
+  1000000,
+  1000000
+ ],
+ "bytes": [
+  209478154,
+  209485304
+ ],
+ "runs": [
+  {
+   "total": 70.13022849999834,
+   "wall": {
+    "read file (I/O + utf-8 + split)": 0.32120050000958145,
+    "json.loads": 9.020252709000488,
+    "Rec.of (normalize + keys + hashes)": 32.03253429099277,
+    "validate": 6.394896500001778,
+    "match + classify (compare)": 20.55807008399279,
+    "leaks + verdict": 1.5730690410127863,
+    "multiset digest": 0.22626849998778198
+   },
+   "gc": {
+    "read file (I/O + utf-8 + split)": 0.0,
+    "json.loads": 6.735144057034631,
+    "Rec.of (normalize + keys + hashes)": 21.962349823108525,
+    "validate": 0.31565538521681447,
+    "match + classify (compare)": 15.273957940895343,
+    "leaks + verdict": 0.07105592083826195,
+    "multiset digest": 0.0
+   }
+  },
+  {
+   "total": 61.69287808300578,
+   "wall": {
+    "read file (I/O + utf-8 + split)": 0.22788849999778904,
+    "json.loads": 7.850530208001146,
+    "Rec.of (normalize + keys + hashes)": 28.238429874996655,
+    "validate": 5.957377583006746,
+    "match + classify (compare)": 17.527886291994946,
+    "leaks + verdict": 1.6610389170091366,
+    "multiset digest": 0.22573383299459238
+   },
+   "gc": {
+    "read file (I/O + utf-8 + split)": 0.0,
+    "json.loads": 5.836423338914756,
+    "Rec.of (normalize + keys + hashes)": 18.883926095455536,
+    "validate": 0.31592127977637574,
+    "match + classify (compare)": 12.478262240896584,
+    "leaks + verdict": 0.0710627889202442,
+    "multiset digest": 0.0
+   }
+  },
+  {
+   "total": 62.43197258299915,
+   "wall": {
+    "read file (I/O + utf-8 + split)": 0.22621533399797045,
+    "json.loads": 7.734499708007206,
+    "Rec.of (normalize + keys + hashes)": 27.75705770798959,
+    "validate": 6.449793334002607,
+    "match + classify (compare)": 18.467596875008894,
+    "leaks + verdict": 1.5681127909920178,
+    "multiset digest": 0.2245495840033982
+   },
+   "gc": {
+    "read file (I/O + utf-8 + split)": 0.0,
+    "json.loads": 5.712726617086446,
+    "Rec.of (normalize + keys + hashes)": 18.433217883546604,
+    "validate": 0.3149534589610994,
+    "match + classify (compare)": 13.38332581197028,
+    "leaks + verdict": 0.0682778031914495,
+    "multiset digest": 0.0
+   }
+  }
+ ],
+ "diff_reference": [
+  {
+   "total": 39.85300595899753,
+   "internal": {
+    "normalize": 15.469898833995103,
+    "validate": 9.738904041005298,
+    "match": 6.823404291993938,
+    "leaks_verdict": 1.403469374999986
+   }
+  },
+  {
+   "total": 39.729075166003895,
+   "internal": {
+    "normalize": 15.264369708995218,
+    "validate": 9.641207416003454,
+    "match": 6.826325041998643,
+    "leaks_verdict": 1.5936601669964148
+   }
+  },
+  {
+   "total": 39.2011754999985,
+   "internal": {
+    "normalize": 15.114986833999865,
+    "validate": 9.566195040999446,
+    "match": 6.700313749999623,
+    "leaks_verdict": 1.4408845419966383
+   }
+  }
+ ],
+ "diff_total_reference": 39.2011754999985,
+ "recof_parts": {
+  "normalize_record": 8.773548291006591,
+  "json.dumps payload (sort_keys)": 3.0582847490004497,
+  "json.dumps line": 2.8955414170050062,
+  "str.encode": 0.24115375100518577,
+  "blake2b (2 per record)": 1.1230746249930235,
+  "Rec dataclass": 0.8289172490040073,
+  "_total Rec.of": 18.599824832985178
+ },
+ "line_bytes": 416963458,
+ "big_sort_content_keys": 0.31554370900266804,
+ "n_content_keys": 997942,
+ "min_total": 61.69287808300578,
+ "min_wall": {
+  "read file (I/O + utf-8 + split)": 0.22621533399797045,
+  "json.loads": 7.734499708007206,
+  "Rec.of (normalize + keys + hashes)": 27.75705770798959,
+  "validate": 5.957377583006746,
+  "match + classify (compare)": 17.527886291994946,
+  "leaks + verdict": 1.5681127909920178,
+  "multiset digest": 0.2245495840033982
+ },
+ "min_gc": {
+  "read file (I/O + utf-8 + split)": 0.0,
+  "json.loads": 5.712726617086446,
+  "Rec.of (normalize + keys + hashes)": 18.433217883546604,
+  "validate": 0.3149534589610994,
+  "match + classify (compare)": 12.478262240896584,
+  "leaks + verdict": 0.0682778031914495,
+  "multiset digest": 0.0
+ }
+}

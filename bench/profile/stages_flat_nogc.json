@@ -1,0 +1,136 @@
+{
+ "n_files": [
+  1000000,
+  1000000
+ ],
+ "bytes": [
+  209478154,
+  209485304
+ ],
+ "runs": [
+  {
+   "total": 27.25404850000632,
+   "wall": {
+    "read file (I/O + utf-8 + split)": 0.2811832500010496,
+    "json.loads": 2.624012207990745,
+    "Rec.of (normalize + keys + hashes)": 10.74217337500886,
+    "validate": 6.4024124999996275,
+    "match + classify (compare)": 5.205517750000581,
+    "leaks + verdict": 1.6688677089987323,
+    "multiset digest": 0.3252853750018403
+   },
+   "gc": {
+    "read file (I/O + utf-8 + split)": 0.0,
+    "json.loads": 0.0,
+    "Rec.of (normalize + keys + hashes)": 0.0,
+    "validate": 0.0,
+    "match + classify (compare)": 0.0,
+    "leaks + verdict": 0.0,
+    "multiset digest": 0.0
+   }
+  },
+  {
+   "total": 25.84629162499914,
+   "wall": {
+    "read file (I/O + utf-8 + split)": 0.22869554099452216,
+    "json.loads": 2.0240044170059264,
+    "Rec.of (normalize + keys + hashes)": 10.707628499993007,
+    "validate": 6.459218874995713,
+    "match + classify (compare)": 4.655297417004476,
+    "leaks + verdict": 1.536585499998182,
+    "multiset digest": 0.23041504100547172
+   },
+   "gc": {
+    "read file (I/O + utf-8 + split)": 0.0,
+    "json.loads": 0.0,
+    "Rec.of (normalize + keys + hashes)": 0.0,
+    "validate": 0.0,
+    "match + classify (compare)": 0.0,
+    "leaks + verdict": 0.0,
+    "multiset digest": 0.0
+   }
+  },
+  {
+   "total": 26.10533583399956,
+   "wall": {
+    "read file (I/O + utf-8 + split)": 0.2408367080060998,
+    "json.loads": 2.3685505829926115,
+    "Rec.of (normalize + keys + hashes)": 10.458514583995566,
+    "validate": 6.305157750000944,
+    "match + classify (compare)": 4.961871000006795,
+    "leaks + verdict": 1.543645750003634,
+    "multiset digest": 0.2222381659958046
+   },
+   "gc": {
+    "read file (I/O + utf-8 + split)": 0.0,
+    "json.loads": 0.0,
+    "Rec.of (normalize + keys + hashes)": 0.0,
+    "validate": 0.0,
+    "match + classify (compare)": 0.0,
+    "leaks + verdict": 0.0,
+    "multiset digest": 0.0
+   }
+  }
+ ],
+ "diff_reference": [
+  {
+   "total": 22.910446249996312,
+   "internal": {
+    "normalize": 9.311384458997054,
+    "validate": 5.331027833002736,
+    "match": 4.165916250000009,
+    "leaks_verdict": 1.3537531250040047
+   }
+  },
+  {
+   "total": 23.085915874995408,
+   "internal": {
+    "normalize": 9.448293125009513,
+    "validate": 5.220479415991576,
+    "match": 4.319367208998301,
+    "leaks_verdict": 1.3448092080070637
+   }
+  },
+  {
+   "total": 22.883535499990103,
+   "internal": {
+    "normalize": 9.404267958991113,
+    "validate": 5.0812647080019815,
+    "match": 4.334526667007594,
+    "leaks_verdict": 1.3351249159895815
+   }
+  }
+ ],
+ "diff_total_reference": 22.883535499990103,
+ "recof_parts": {
+  "normalize_record": 1.185109583006124,
+  "json.dumps payload (sort_keys)": 3.045535375000327,
+  "json.dumps line": 2.8837860409985296,
+  "str.encode": 0.1958541669882834,
+  "blake2b (2 per record)": 1.0752470000006724,
+  "Rec dataclass": 0.27218395899399184,
+  "_total Rec.of": 9.753409083001316
+ },
+ "line_bytes": 416963458,
+ "big_sort_content_keys": 0.3269284999987576,
+ "n_content_keys": 997942,
+ "min_total": 25.84629162499914,
+ "min_wall": {
+  "read file (I/O + utf-8 + split)": 0.22869554099452216,
+  "json.loads": 2.0240044170059264,
+  "Rec.of (normalize + keys + hashes)": 10.458514583995566,
+  "validate": 6.305157750000944,
+  "match + classify (compare)": 4.655297417004476,
+  "leaks + verdict": 1.536585499998182,
+  "multiset digest": 0.2222381659958046
+ },
+ "min_gc": {
+  "read file (I/O + utf-8 + split)": 0.0,
+  "json.loads": 0.0,
+  "Rec.of (normalize + keys + hashes)": 0.0,
+  "validate": 0.0,
+  "match + classify (compare)": 0.0,
+  "leaks + verdict": 0.0,
+  "multiset digest": 0.0
+ }
+}

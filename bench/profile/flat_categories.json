@@ -1,0 +1,218 @@
+{
+ "wall_under_profile": 55.59789170901058,
+ "total_tottime": 55.332827365,
+ "categories": {
+  "dsdiff Python code": 22.464422789000004,
+  "json.dumps (C encoder)": 14.829422668000001,
+  "json.loads (C decoder)": 6.523114787000001,
+  "sorting (sorted/list.sort)": 4.264142121,
+  "other builtins": 3.973551931,
+  "str methods": 1.5563085110000001,
+  "blake2b": 0.996859342,
+  "sort key lambdas": 0.445566116,
+  "unicodedata.normalize": 0.27893595200000004,
+  "fs (os/io)": 0.000503148
+ },
+ "top": [
+  [
+   11.217928621,
+   "json.dumps (C encoder)",
+   "encoder.py:205(iterencode)"
+  ],
+  [
+   7.867951715,
+   "dsdiff Python code",
+   "diff.py:132(validate)"
+  ],
+  [
+   5.095023913,
+   "json.loads (C decoder)",
+   "decoder.py:351(raw_decode)"
+  ],
+  [
+   4.260832346,
+   "sorting (sorted/list.sort)",
+   "~:0(<built-in method builtins.sorted>)"
+  ],
+  [
+   2.277117607,
+   "dsdiff Python code",
+   "diff.py:198(<genexpr>)"
+  ],
+  [
+   1.821054618,
+   "dsdiff Python code",
+   "normalize.py:24(_h)"
+  ],
+  [
+   1.8056755400000002,
+   "json.dumps (C encoder)",
+   "__init__.py:183(dumps)"
+  ],
+  [
+   1.7534683450000002,
+   "dsdiff Python code",
+   "diff.py:177(match)"
+  ],
+  [
+   1.6928923690000002,
+   "dsdiff Python code",
+   "normalize.py:14(normalize_record)"
+  ],
+  [
+   1.5498867660000002,
+   "json.dumps (C encoder)",
+   "encoder.py:183(encode)"
+  ],
+  [
+   1.183287392,
+   "other builtins",
+   "~:0(<method 'get' of 'dict' objects>)"
+  ],
+  [
+   1.01870674,
+   "dsdiff Python code",
+   "diff.py:234(within_leaks)"
+  ],
+  [
+   0.996859342,
+   "blake2b",
+   "~:0(<method 'hexdigest' of '_blake2.blake2b' objects>)"
+  ],
+  [
+   0.9326063370000001,
+   "dsdiff Python code",
+   "normalize.py:7(normalize_name)"
+  ],
+  [
+   0.9156311720000001,
+   "json.loads (C decoder)",
+   "decoder.py:340(decode)"
+  ],
+  [
+   0.859751612,
+   "dsdiff Python code",
+   "diff.py:115(classify)"
+  ],
+  [
+   0.77948498,
+   "dsdiff Python code",
+   "normalize.py:29(keys)"
+  ],
+  [
+   0.695763243,
+   "other builtins",
+   "~:0(<built-in method builtins.isinstance>)"
+  ],
+  [
+   0.647553429,
+   "dsdiff Python code",
+   "diff.py:35(of)"
+  ],
+  [
+   0.520316795,
+   "dsdiff Python code",
+   "normalize.py:40(line_hash)"
+  ],
+  [
+   0.512459702,
+   "json.loads (C decoder)",
+   "__init__.py:299(loads)"
+  ],
+  [
+   0.479075929,
+   "dsdiff Python code",
+   "diff.py:338(diff)"
+  ],
+  [
+   0.44278072300000004,
+   "sort key lambdas",
+   "diff.py:185(<lambda>)"
+  ],
+  [
+   0.426443163,
+   "dsdiff Python code",
+   "jsonl.py:9(read_jsonl)"
+  ],
+  [
+   0.42625700800000005,
+   "other builtins",
+   "~:0(<method 'append' of 'list' objects>)"
+  ],
+  [
+   0.42301450100000004,
+   "other builtins",
+   "profile_stages.py:374(<lambda>)"
+  ],
+  [
+   0.41783042800000003,
+   "other builtins",
+   "~:0(<method 'match' of 're.Pattern' objects>)"
+  ],
+  [
+   0.400379851,
+   "dsdiff Python code",
+   "normalize.py:17(<genexpr>)"
+  ],
+  [
+   0.380028872,
+   "dsdiff Python code",
+   "diff.py:319(compare)"
+  ],
+  [
+   0.360854569,
+   "str methods",
+   "~:0(<method 'encode' of 'str' objects>)"
+  ],
+  [
+   0.343281551,
+   "dsdiff Python code",
+   "diff.py:39(path_key)"
+  ],
+  [
+   0.309495207,
+   "str methods",
+   "~:0(<method 'lower' of 'str' objects>)"
+  ],
+  [
+   0.27893595200000004,
+   "unicodedata.normalize",
+   "~:0(<built-in method unicodedata.normalize>)"
+  ],
+  [
+   0.26261570700000003,
+   "str methods",
+   "~:0(<method 'strip' of 'str' objects>)"
+  ],
+  [
+   0.255931741,
+   "json.dumps (C encoder)",
+   "encoder.py:105(__init__)"
+  ],
+  [
+   0.24069609400000003,
+   "str methods",
+   "~:0(<method 'startswith' of 'str' objects>)"
+  ],
+  [
+   0.23664395200000002,
+   "str methods",
+   "~:0(<method 'join' of 'str' objects>)"
+  ],
+  [
+   0.22055670800000002,
+   "dsdiff Python code",
+   "normalize.py:47(<genexpr>)"
+  ],
+  [
+   0.195012458,
+   "other builtins",
+   "~:0(<built-in method builtins.len>)"
+  ],
+  [
+   0.193087543,
+   "other builtins",
+   "~:0(<method 'end' of 're.Match' objects>)"
+  ]
+ ]
+}

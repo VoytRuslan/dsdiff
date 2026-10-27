@@ -1,0 +1,55 @@
+run 1: 27.3 s
+run 2: 25.8 s
+run 3: 26.1 s
+{
+ "read file (I/O + utf-8 + split)": 0.22869554099452216,
+ "json.loads": 2.0240044170059264,
+ "Rec.of (normalize + keys + hashes)": 10.458514583995566,
+ "validate": 6.305157750000944,
+ "match + classify (compare)": 4.655297417004476,
+ "leaks + verdict": 1.536585499998182,
+ "multiset digest": 0.2222381659958046
+}
+run 1: 18.5 s, 20554 objects written
+run 2: 17.8 s, 20554 objects written
+run 3: 18.0 s, 20554 objects written
+{
+ "read file (I/O + utf-8 + split)": 0.10149400000227615,
+ "json.loads": 0.9874247919942718,
+ "Rec.of (normalize + keys + hashes)": 4.642605540997465,
+ "bucket_of (blake2b 8 B, 2 per record)": 0.6372745830012718,
+ "json.dumps raw line for bucket body": 1.4986066669953289,
+ "group into buckets (dicts, appends)": 0.5638388750085142,
+ "id buckets: sort + join + encode": 0.3241601660120068,
+ "content buckets: sort + format (cbucket_body)": 0.7321440419909777,
+ "put_tree (objects: sha256, zlib, fs)": 5.0648366670066025,
+ "multiset digest": 0.09123320900835097,
+ "validate": 2.4993855409993557,
+ "commit object + HEAD": 0.0007964170072227716
+}
+{
+ "put: header + concat": 0.042859747729380615,
+ "sha256": 0.12555544149654452,
+ "put: os.path.join": 0.04885189299238846,
+ "fs: os.path.exists": 0.4537560257158475,
+ "_objects": 133154.0,
+ "_bytes sha256": 269109165.0,
+ "fs: os.makedirs": 0.12014215410454199,
+ "zlib.compress": 0.9214467720303219,
+ "fs: open + write + close": 2.0766658295469824,
+ "fs: os.replace": 1.1574577873543603,
+ "_bytes zlib in": 51546719.0,
+ "_bytes zlib out": 15915504.0
+}
+run 1: 70.1 s
+run 2: 61.7 s
+run 3: 62.4 s
+{
+ "read file (I/O + utf-8 + split)": 0.22621533399797045,
+ "json.loads": 7.734499708007206,
+ "Rec.of (normalize + keys + hashes)": 27.75705770798959,
+ "validate": 5.957377583006746,
+ "match + classify (compare)": 17.527886291994946,
+ "leaks + verdict": 1.5681127909920178,
+ "multiset digest": 0.2245495840033982
+}

@@ -1,0 +1,220 @@
+{
+ "wall_under_profile": 35.691919792006956,
+ "total_tottime": 35.627489752,
+ "categories": {
+  "dsdiff Python code": 10.611485945000002,
+  "json.dumps (C encoder)": 10.502802609,
+  "fs (os/io)": 3.9081999400000003,
+  "json.loads (C decoder)": 3.078345683,
+  "other builtins": 2.4300134690000013,
+  "sorting (sorted/list.sort)": 1.7073627480000002,
+  "str methods": 1.590493986,
+  "blake2b": 0.7976501460000001,
+  "zlib": 0.735277032,
+  "unicodedata.normalize": 0.134717159,
+  "sha256": 0.10309641900000001,
+  "hexdigest/digest": 0.028044616
+ },
+ "top": [
+  [
+   7.871560155,
+   "json.dumps (C encoder)",
+   "encoder.py:205(iterencode)"
+  ],
+  [
+   2.9528135740000003,
+   "dsdiff Python code",
+   "diff.py:132(validate)"
+  ],
+  [
+   2.362322225,
+   "json.loads (C decoder)",
+   "decoder.py:351(raw_decode)"
+  ],
+  [
+   1.7073627480000002,
+   "sorting (sorted/list.sort)",
+   "~:0(<built-in method builtins.sorted>)"
+  ],
+  [
+   1.4529917760000002,
+   "dsdiff Python code",
+   "store.py:247(commit)"
+  ],
+  [
+   1.30658216,
+   "json.dumps (C encoder)",
+   "__init__.py:183(dumps)"
+  ],
+  [
+   1.15433926,
+   "fs (os/io)",
+   "~:0(<built-in method _io.open>)"
+  ],
+  [
+   1.1391319480000002,
+   "json.dumps (C encoder)",
+   "encoder.py:183(encode)"
+  ],
+  [
+   1.130682347,
+   "fs (os/io)",
+   "~:0(<built-in method posix.replace>)"
+  ],
+  [
+   1.033305995,
+   "fs (os/io)",
+   "~:0(<method '__exit__' of '_io._IOBase' objects>)"
+  ],
+  [
+   0.9554217210000001,
+   "dsdiff Python code",
+   "store.py:58(bucket_of)"
+  ],
+  [
+   0.901831869,
+   "dsdiff Python code",
+   "normalize.py:24(_h)"
+  ],
+  [
+   0.842356521,
+   "dsdiff Python code",
+   "normalize.py:14(normalize_record)"
+  ],
+  [
+   0.735277032,
+   "zlib",
+   "~:0(<built-in method zlib.compress>)"
+  ],
+  [
+   0.636702418,
+   "other builtins",
+   "profile_stages.py:375(<lambda>)"
+  ],
+  [
+   0.537298919,
+   "fs (os/io)",
+   "~:0(<built-in method posix.stat>)"
+  ],
+  [
+   0.5210621630000001,
+   "dsdiff Python code",
+   "store.py:71(cbucket_body)"
+  ],
+  [
+   0.494307015,
+   "blake2b",
+   "~:0(<method 'hexdigest' of '_blake2.blake2b' objects>)"
+  ],
+  [
+   0.465081931,
+   "other builtins",
+   "~:0(<built-in method builtins.isinstance>)"
+  ],
+  [
+   0.46285724400000006,
+   "dsdiff Python code",
+   "normalize.py:7(normalize_name)"
+  ],
+  [
+   0.45866427600000004,
+   "json.loads (C decoder)",
+   "decoder.py:340(decode)"
+  ],
+  [
+   0.452027504,
+   "str methods",
+   "~:0(<method 'join' of 'str' objects>)"
+  ],
+  [
+   0.43185475500000003,
+   "str methods",
+   "~:0(<method 'encode' of 'str' objects>)"
+  ],
+  [
+   0.38177972800000004,
+   "dsdiff Python code",
+   "normalize.py:29(keys)"
+  ],
+  [
+   0.320834157,
+   "dsdiff Python code",
+   "diff.py:35(of)"
+  ],
+  [
+   0.30334313100000004,
+   "blake2b",
+   "~:0(<method 'digest' of '_blake2.blake2b' objects>)"
+  ],
+  [
+   0.27941776900000004,
+   "other builtins",
+   "~:0(<method 'append' of 'list' objects>)"
+  ],
+  [
+   0.269863939,
+   "str methods",
+   "~:0(<method 'replace' of 'str' objects>)"
+  ],
+  [
+   0.259705073,
+   "dsdiff Python code",
+   "normalize.py:40(line_hash)"
+  ],
+  [
+   0.257359182,
+   "json.loads (C decoder)",
+   "__init__.py:299(loads)"
+  ],
+  [
+   0.244213063,
+   "dsdiff Python code",
+   "store.py:63(_esc)"
+  ],
+  [
+   0.209779459,
+   "dsdiff Python code",
+   "jsonl.py:9(read_jsonl)"
+  ],
+  [
+   0.206220217,
+   "other builtins",
+   "~:0(<method 'match' of 're.Pattern' objects>)"
+  ],
+  [
+   0.194111274,
+   "dsdiff Python code",
+   "normalize.py:17(<genexpr>)"
+  ],
+  [
+   0.185528346,
+   "json.dumps (C encoder)",
+   "encoder.py:105(__init__)"
+  ],
+  [
+   0.183938503,
+   "dsdiff Python code",
+   "store.py:264(<genexpr>)"
+  ],
+  [
+   0.176364718,
+   "dsdiff Python code",
+   "store.py:104(put)"
+  ],
+  [
+   0.150917401,
+   "str methods",
+   "~:0(<method 'lower' of 'str' objects>)"
+  ],
+  [
+   0.14929151200000002,
+   "dsdiff Python code",
+   "jsonl.py:5(dumps)"
+  ],
+  [
+   0.147200557,
+   "dsdiff Python code",
+   "store.py:77(<genexpr>)"
+  ]
+ ]
+}

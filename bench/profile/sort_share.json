@@ -1,0 +1,6 @@
+{
+ "validate: sorted(by_id/by_c.items()), per version": 2.5533646670082817,
+ "match: sorted(all content keys)": 0.44398358299804386,
+ "match: per-content sorted(key=order), 2 per key": 2.104750790997059,
+ "total": 5.102099041003385
+}
