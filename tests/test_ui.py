@@ -1,8 +1,13 @@
 """dsdiff ui: the JSON API against the CLI, on a server in a background thread, through urllib."""
-import fcntl
+import os
+
+if os.name == "nt":
+    import msvcrt
+else:
+    import fcntl
+    
 import http.client
 import json
-import os
 import threading
 import time
 import urllib.error
@@ -196,8 +201,16 @@ def test_two_commits_at_once_queue(ui, data):
 def test_queued_behind_lock_and_cancel(ui, data):
     """A write waits while another process holds .dsdiff/ui.lock; cancelling it leaves HEAD alone."""
     repo = make_repo(ui, data, "repo_lock")
-    with open(repo / ".dsdiff" / "ui.lock", "a") as f:
-        fcntl.flock(f, fcntl.LOCK_EX)
+    with open(repo / ".dsdiff" / "ui.lock", "a+b") as f:
+        if os.name == "nt":
+            f.seek(0, os.SEEK_END)
+            if f.tell() == 0:
+                f.write(b"\0")
+                f.flush()
+            f.seek(0)
+            msvcrt.locking(f.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            fcntl.flock(f, fcntl.LOCK_EX)
         job = ui.commit("data/tiny/v1.jsonl", "v1")
         time.sleep(0.3)
         _, state = ui.get(f"/api/jobs/{job}")
@@ -237,24 +250,48 @@ def test_export_patch_verifies(ui, data, tmp_path):
 def test_paths_outside_root(ui, data, tmp_path):
     outside = tmp_path / "outside"
     outside.mkdir()
-    (outside / "v.jsonl").write_text((data / "data/tiny/v1.jsonl").read_text(encoding="utf-8"), encoding="utf-8")
+    (outside / "v.jsonl").write_text(
+        (data / "data/tiny/v1.jsonl").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+
     link = data / "link_out"
     if not link.exists():
-        link.symlink_to(outside, target_is_directory=True)
-    for path in ("/api/files?dir=..", f"/api/files?dir={outside}", "/api/files?dir=link_out",
-                 "/api/files?dir=data/../.."):
+        try:
+            link.symlink_to(outside, target_is_directory=True)
+        except OSError as exc:
+            if os.name == "nt" and getattr(exc, "winerror", None) == 1314:
+                pytest.skip(
+                    "Creating symlinks requires Windows Developer Mode "
+                    "or elevated privileges"
+                )
+            raise
+
+    for path in (
+        "/api/files?dir=..",
+        f"/api/files?dir={outside}",
+        "/api/files?dir=link_out",
+        "/api/files?dir=data/../..",
+    ):
         status, err = ui.get(path)
         assert status == 403 and err["error"] == "path_outside_root", path
-    for body in ({"file_a": "link_out/v.jsonl", "file_b": "data/tiny/v2.jsonl"},
-                 {"file_a": str(outside / "v.jsonl"), "file_b": "data/tiny/v2.jsonl"},
-                 {"file_a": "../outside/v.jsonl", "file_b": "data/tiny/v2.jsonl"}):
+
+    for body in (
+        {"file_a": "link_out/v.jsonl", "file_b": "data/tiny/v2.jsonl"},
+        {"file_a": str(outside / "v.jsonl"), "file_b": "data/tiny/v2.jsonl"},
+        {"file_a": "../outside/v.jsonl", "file_b": "data/tiny/v2.jsonl"},
+    ):
         assert ui.post("/api/compare", body)[0] == 403
+
     make_repo(ui, data, "repo_paths")
-    assert ui.post("/api/commit", {"file": "link_out/v.jsonl", "message": "x"})[0] == 403
+    assert ui.post(
+        "/api/commit",
+        {"file": "link_out/v.jsonl", "message": "x"},
+    )[0] == 403
+
     _, listing = ui.get("/api/files?dir=")
     assert "link_out" not in [e["name"] for e in listing["entries"]]
     assert ui.post("/api/repo", {"dir": "..", "create": True})[0] == 403
-
 
 def test_token_and_host(ui):
     assert ui.get("/api/state", token=False)[0] == 403

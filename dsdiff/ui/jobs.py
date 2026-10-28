@@ -1,9 +1,15 @@
 """Background jobs: compares run in parallel; writes to a repository (commit, create) go one at a time
 through a per-repository queue and a lock file in .dsdiff/, and are logged to .dsdiff/ui-log.jsonl."""
 import datetime
-import fcntl
 import json
 import os
+
+if os.name == "nt":
+    import msvcrt
+else:
+    import fcntl
+
+
 import secrets
 import threading
 import time
@@ -13,6 +19,47 @@ from ..store import Store
 from .util import ApiError, Cancelled, count_lines, read_records
 
 LOCK_RETRY = 1.0  # seconds between attempts to take the lock file
+
+
+import errno
+
+
+def _try_lock(file):
+    """Try to acquire an exclusive lock without blocking."""
+    if os.name == "nt":
+        # msvcrt.locking locks a byte range, so the file must contain a byte.
+        file.seek(0, os.SEEK_END)
+        if file.tell() == 0:
+            file.write(b"\0")
+            file.flush()
+        file.seek(0)
+
+        try:
+            msvcrt.locking(file.fileno(), msvcrt.LK_NBLCK, 1)
+        except OSError as e:
+            if (
+                e.errno in (errno.EACCES, errno.EAGAIN, errno.EDEADLK)
+                or getattr(e, "winerror", None) in (33, 36)
+            ):
+                return False
+            raise
+    else:
+        try:
+            fcntl.flock(file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            return False
+
+    return True
+
+
+def _unlock(file):
+    """Release an exclusive file lock."""
+    if os.name == "nt":
+        file.seek(0)
+        msvcrt.locking(file.fileno(), msvcrt.LK_UNLCK, 1)
+    else:
+        fcntl.flock(file, fcntl.LOCK_UN)
+
 
 
 class Job:
@@ -132,19 +179,20 @@ class RepoWriter:
     def locked(self, job, fn):
         root = os.path.join(self.repo, ".dsdiff")
         os.makedirs(root, exist_ok=True)
-        with open(os.path.join(root, "ui.lock"), "a") as f:
+
+        lock_path = os.path.join(root, "ui.lock")
+        with open(lock_path, "a+b") as f:
             job.stage = "wait_lock"
-            while True:
-                try:
-                    fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
-                    break
-                except BlockingIOError:  # another dsdiff ui writes to this repository
-                    job.check()
-                    time.sleep(LOCK_RETRY)
+
+            while not _try_lock(f):
+                job.check()
+                time.sleep(LOCK_RETRY)
+
             try:
                 return fn(job)
             finally:
-                fcntl.flock(f, fcntl.LOCK_UN)
+                _unlock(f)
+
 
 
 def log_path(repo):
@@ -181,8 +229,14 @@ def commit_job(repo, path, shown, message):
         job.progress(objects_written=0)
         st = UiStore(repo, job)
         name, c = st.commit(records, message)
-        entry = {"commit": name, "time": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
-                 "file": shown, "size": size, "lines": len(records), "message": message}
+        entry = {
+            "commit": name,
+            "time": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
+            "file": shown.replace("\\", "/"),
+            "size": size,
+            "lines": len(records),
+            "message": message,
+        }
         with open(log_path(repo), "a", encoding="utf-8", newline="\n") as f:
             f.write(json.dumps(entry, ensure_ascii=False) + "\n")
         return {"commit": name, "short": name[:12], "records": c["counts"]["records"],
